@@ -34,7 +34,7 @@ SECRET_KEY = '3sw25)^22%!e@2!0amo^h0)ip747y#-&r6jucv4&*#1v^%yo$^'
 # SECURITY WARNING: don't run with debug turned on in production!
 # 调试模式，会显示详细的错误信息；修改代码后，会自动重启服务。
 DEBUG = True
-# 设置DEBUG为False，则必须设置allowed_hosts。表示客户端访问服务器的IP是什么
+# 设置DEBUG为False，则必须设置allowed_hosts。表示服务器的访问IP
 # 可以设置为域名，那客户端访问的时候，只能通过域名访问。
 # 可以设置为具体的IP，那客户端访问的时候，只能通过IP访问。
 # 可以设置为*，表示域名和IP都可以访问。(不推荐这么用)
@@ -138,8 +138,8 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'zh-Hans'
 
 # 时区设置
-TIME_ZONE = 'UTC'
-# TIME_ZONE = 'Asia/Shanghai'
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 

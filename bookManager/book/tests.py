@@ -100,6 +100,7 @@ print(models.PeopleInfo.objects.filter(book_id=4))
 # bookinfo模型对象里有一个peopleinfo_set属性，访问这个属性，返回的是一个RelatedManager实例对象.
 print(models.BookInfo.objects.get(id=4).peopleinfo_set.all())
 
+
 # 查询人物为20的书籍信息
 print(models.BookInfo.objects.filter(peopleinfo__id=20))
 print(models.BookInfo.objects.get(peopleinfo__id=20))
@@ -107,3 +108,4 @@ print(models.BookInfo.objects.get(peopleinfo__id=20))
 print(models.PeopleInfo.objects.get(id=20).book)
 # 查询书籍为4的书籍信息
 print(models.BookInfo.objects.filter(peopleinfo__book_id=4))
+
