@@ -171,3 +171,36 @@ print(peoples.filter())
 
 
 # 分页
+peoples = models.PeopleInfo.objects.all()
+from django.core.paginator import Paginator
+# per_page:每页显示条数
+p = Paginator(peoples, 2)
+# 返回数据总条数
+print(p.count)
+# 返回总页数 = (p.count / p.per_page) if (p.count % p.per_page) == 0 else (p.count // p.per_page)+1
+print(p.num_pages)
+# 返回从1开始的页面范围
+print(p.page_range) # range(1, 10)
+
+
+# 返回一个基于页码1的Page对象
+print(p.page(1))    # <Page 1 of 9>
+print(type(p.page(1)))    # <class 'django.core.paginator.Page'>
+# 返回一个QuerySet
+print(p.page(1).object_list)
+
+
+page_obj = p.page(2)
+# 判断是否还有下一页
+print(page_obj.has_next())
+# 判断是否还有上一页
+print(page_obj.has_previous())
+# 判断是否还有其他页码
+print(page_obj.has_other_pages())
+# 下一页码
+print(page_obj.next_page_number())
+# 上一页码
+print(page_obj.previous_page_number())
+# 返回此页上第一个数据的索引和最后一个数据的索引
+print(page_obj.start_index())
+print(page_obj.end_index())
