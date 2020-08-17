@@ -109,3 +109,65 @@ print(models.PeopleInfo.objects.get(id=20).book)
 # 查询书籍为4的书籍信息
 print(models.BookInfo.objects.filter(peopleinfo__book_id=4))
 
+# 查询图书，要求图书人物为"郭靖"
+print(models.BookInfo.objects.filter(peopleinfo__name="郭靖"))
+# 查询图书，要求图书中人物的描述包含"八"
+print(models.BookInfo.objects.filter(peopleinfo__description__contains="八"))
+# 查询人物ID=20的图书信息
+people = models.PeopleInfo.objects.get(id=20)
+print(models.BookInfo.objects.get(peopleinfo=people))
+
+
+# 查询书名为“天龙八部”的所有人物
+print(models.PeopleInfo.objects.filter(book__name="天龙八部"))
+# 查询图书阅读量大于30的所有人物
+print(models.PeopleInfo.objects.filter(book__readcount__gt=30))
+# 查询book_id=4的所有人物
+book = models.BookInfo.objects.get(id=4)
+print(models.PeopleInfo.objects.filter(book=book))
+
+# exists()的使用：
+print(models.PeopleInfo.objects.exists())
+print(models.PeopleInfo.objects.filter(book_id=4).exists())
+print(models.PeopleInfo.objects.all().exists())
+
+
+
+"""
+QuerySet的两个特性:
+    1、它是惰性机制，即创建结果集不会去访问数据库，只有调用数据时，才会去访问数据库执行。
+        # 创建结果集
+        books = models.BookInfo.objects.all()
+        # 数据调用：for循环遍历、序列化、与if语句一起使用，都是数据调用。
+        print([book for book in books])
+    2、缓存
+        概念：这里的缓存，是指将硬盘中的数据存放到内存。再次使用数据时，从内存中读取，不必要重新从硬盘获取，这样速度会很慢。（减少了数据库的查询次数）
+        如何缓存呢？  
+            # 通过创建结果集来进行缓存
+            books = models.BookInfo.objects.all()
+            # 数据调用：只有第一次会与数据库进行交互执行，之后的都会从缓存中直接读取。
+            [book for book in books]
+        什么是对结果集没有进行缓存呢？
+            # 没有创建结果集就不会缓存
+            [book for book in models.BookInfo.objects.all()]    
+            
+"""
+# 创建结果集
+books = models.BookInfo.objects.all()
+# 数据调用
+print([book for book in books])
+
+
+# 限制查询集(即切片操作)
+peoples = models.PeopleInfo.objects.all()
+# 执行了查询
+p1 = peoples[0]
+# 没有执行查询    (peoples[0] 等价于 peoples[0:1].get())
+peoples2 = peoples[0:1]
+# 执行了查询
+print(peoples2.get())    # QuerySet还有get()方法呢,要调用get方法,必须保证有且只有1条数据,否则报错.
+# 不写过滤条件,则查找所有数据
+print(peoples.filter())
+
+
+# 分页

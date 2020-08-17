@@ -45,7 +45,9 @@ class PeopleInfo(models.Model):
     """
 
     def __str__(self):
-        return self.name + '(' + str(self.book) + ')'
+        # print(str(self.book))
+        # return self.name + '(' + str(self.book) + ')'
+        return self.name + '(' + self.book.name + ')'
 
     class Meta:
         # 修改表名（默认为“应用名_类名”）
