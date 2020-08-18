@@ -166,8 +166,21 @@ STATICFILES_DIRS = [
 # SESSION_COOKIE_AGE = 180
 
 # 设置session数据存储在哪里,它默认是存储在数据库中.如果存储在数据库,以下项可以配置,也可以不配置.
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+# SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 # 如果想将session数据保存在redis中,作如下设置:
 # SESSION_ENGINE='django.contrib.sessions.backends.cache'
 # 优先从本机内存中存取，如果没有则从数据库中存取。
 # SESSION_ENGINE='django.contrib.sessions.backends.cached_db'
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'

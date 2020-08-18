@@ -137,7 +137,13 @@ def get_session(request):
 
 
 def clear_session(request):
+    """
     # 清除session:删除在数据库存储的值,key仍保留.同时,服务器重新设置了cookie信息,把它响应给了客户端.
+    ****************
+    redis的实现效果等同上面的
+
+    """
+
     request.session.clear()
     # 清除了session,key存在,但值已经被删除了,因此打印None
     print(request.session.get("user_id", None))
@@ -147,6 +153,10 @@ def clear_session(request):
 def flush_session(request):
     """刷新cookie:删除了在数据库存储的整条数据,同时,服务器重新设置了cookie并响应给客户端.如下:
             Set-Cookie: sessionid=""; expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0; Path=/
+
+    *************
+    redis中实现效果如下:(和delete_flush()实现效果一致)
+        如果session存储在redis中,则redis中的数据删除,也没有像mysql那样服务器重新设置cookie,客户端的cookie数据也会自动删除.
     """
     request.session.flush()
     try:
@@ -159,7 +169,9 @@ def flush_session(request):
 def delete_session(request):
     """
     删除cookie:删除了在数据库存储的整条数据,但是,服务器没有重新设置cookie并响应给客户端.所以,浏览器仍存储着删除了的key为sessionid的cookie信息.
-
+    *************
+    redis中实现效果如下:(和flush_flush()实现效果一致)
+        如果session存储在redis中,则redis中的数据删除,也没有像mysql那样服务器重新设置cookie,客户端的cookie数据也会自动删除.
     """
     request.session.delete()
     return HttpResponse("删除session")
