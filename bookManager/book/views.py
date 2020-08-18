@@ -74,3 +74,44 @@ def redirect_url(request):
     # 如果想跳转到第三方网站,需要写上http://,如果不写,就会跳转到 /redirect_url/baidu.com/,正好匹配了path('<category_id>/<product_id>/', views.detail)
     return redirect(to="http://baidu.com")
     # return redirect("/index/")
+
+
+def set_cookie(request):
+    """
+    服务器端设置cookie,然后响应给客户端,浏览器再保存到本地电脑.
+    每当浏览器访问页面时,都会携带该网站的所有cookie.
+    """
+    # 响应头增加了Set-Cookie: age=34; Path=/
+    response = HttpResponse("服务器端设置cookie")
+    response.set_cookie('name', 'alex')
+    # 设置cookie的有效时间为5秒
+    response.set_cookie('age', 34, max_age=5)
+    # 不设置cookie的有效时间,则默认为None,即浏览器一次回话结束则失效.
+    response.set_cookie('gender', 1)
+    print(response.cookies)
+    """
+    测试结果:
+        Set-Cookie: age=34; Path=/
+        Set-Cookie: gender=1; Path=/
+        Set-Cookie: name=alex; Path=/
+    """
+    print(type(response.cookies))   # <class 'http.cookies.SimpleCookie'>
+    return response
+
+
+def get_cookie(request):
+    # 请求头增加了 Cookie: name=alex; age=34; gender=1
+    print(request.COOKIES)  # {'name': 'alex', 'age': '34', 'gender': '1'}
+    print(type(request.COOKIES))    # <class 'dict'>
+    return JsonResponse(request.COOKIES)
+
+
+def del_cookie(request):
+    response = JsonResponse(request.COOKIES)
+    # 底层实现,就是设置gender的过期时间为0
+    response.delete_cookie("gender")
+    return response
+
+
+def set_session(request):
+    return None
