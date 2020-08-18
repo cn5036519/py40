@@ -16,6 +16,10 @@ urlpatterns = [
     path('get_cookie/', views.get_cookie),
     path('del_cookie/', views.del_cookie),
     path('set_session/', views.set_session),
+    path('get_session/', views.get_session),
+    path('clear_session/', views.clear_session),
+    path('flush_session/', views.flush_session),
+    path('delete_session/', views.delete_session),
 
     # 类视图
     path('regist/', views.RegistView.as_view()),

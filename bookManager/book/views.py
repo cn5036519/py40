@@ -114,4 +114,52 @@ def del_cookie(request):
 
 
 def set_session(request):
-    return None
+    """
+    设置session,session的数据会默认存储在数据库中,同时,在服务器端设置了一个key叫sessionid的cookie信息,会把它响应给客户端. 如下:
+        Set-Cookie: sessionid=cyrbmci1qc9nwiwewj6pm28y5yodo2ik; expires=Tue, 01 Sep 2020 12:50:33 GMT; HttpOnly; Max-Age=1209600; Path=/; SameSite=Lax
+    客户端下次访问网页时,会携带此cookie,服务器会根据此进行判断,如果正确,那么服务器和客户端就保持了状态连接.
+    """
+    print(request.session)  # <django.contrib.sessions.backends.db.SessionStore object at 0x7f819a432a58>
+    print(type(request.session))    # <class 'django.contrib.sessions.backends.db.SessionStore'>
+    # 设置session
+    request.session["user_id"] = "140501198710092927"
+    request.session["user_name"] = "jackc"
+    # 设置session的有效期.设置为None,则使用系统的默认过期时间,即两周. 设置为0,表示关闭浏览器即过期.
+    # 有效期过后,数据库中的数据并没有删除,需要手动删除.客户端存储的key为sessionid的cookie会自动删除.
+    request.session.set_expiry(30)
+    return HttpResponse("设置session")
+
+
+def get_session(request):
+    id = request.session.get("user_id")
+    name = request.session.get("user_name")
+    return HttpResponse("获取到的session: user_id=%s, user_name=%s" % (id, name))
+
+
+def clear_session(request):
+    # 清除session:删除在数据库存储的值,key仍保留.同时,服务器重新设置了cookie信息,把它响应给了客户端.
+    request.session.clear()
+    # 清除了session,key存在,但值已经被删除了,因此打印None
+    print(request.session.get("user_id", None))
+    return HttpResponse("清除session")
+
+
+def flush_session(request):
+    """刷新cookie:删除了在数据库存储的整条数据,同时,服务器重新设置了cookie并响应给客户端.如下:
+            Set-Cookie: sessionid=""; expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0; Path=/
+    """
+    request.session.flush()
+    try:
+        print(request.session.get("user_id", None))
+    except Exception as e:
+        print("出错了")
+    return HttpResponse("刷新session")
+
+
+def delete_session(request):
+    """
+    删除cookie:删除了在数据库存储的整条数据,但是,服务器没有重新设置cookie并响应给客户端.所以,浏览器仍存储着删除了的key为sessionid的cookie信息.
+
+    """
+    request.session.delete()
+    return HttpResponse("删除session")
