@@ -16,6 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from book import views
+from django.urls import register_converter
+from book.converters import MobileConverter
+
+# 注册自定义的转换器
+register_converter(MobileConverter, "mobile")
 
 urlpatterns = [
     path('admin/', admin.site.urls),

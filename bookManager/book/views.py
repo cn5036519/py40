@@ -175,3 +175,7 @@ def delete_session(request):
     """
     request.session.delete()
     return HttpResponse("删除session")
+
+
+def regex(request):
+    return HttpResponse("ok")
