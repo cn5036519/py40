@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.views import View
 
@@ -26,4 +27,17 @@ class RegistView(View):
 
     def trace(self, request):
         return HttpResponse("regist功能-trace请求")
+
+
+# class LoginView(View, LoginRequiredMixin):
+class LoginView(LoginRequiredMixin, View):
+    """
+    LoginRequiredMixin类的dispatch()方法增加了登录验证功能.
+    LoginRequiredMixin类中实现了dispatch()方法,就不再调用View类中的dispatch()方法.
     
+    """
+    def get(self, request):
+        return HttpResponse("login功能-get请求")
+
+    def post(self, request):
+        return HttpResponse("login功能-post请求")

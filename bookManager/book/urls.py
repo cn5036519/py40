@@ -14,4 +14,6 @@ urlpatterns = [
     path('redirect_url/', views.redirect_url),
     # 类视图
     path('regist/', views.RegistView.as_view()),
+    path('login/', views.LoginView.as_view()),
+
 ]
