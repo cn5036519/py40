@@ -34,7 +34,7 @@ class LoginView(LoginRequiredMixin, View):
     """
     LoginRequiredMixin类的dispatch()方法增加了登录验证功能.
     LoginRequiredMixin类中实现了dispatch()方法,就不再调用View类中的dispatch()方法.
-    
+
     """
     def get(self, request):
         return HttpResponse("login功能-get请求")
