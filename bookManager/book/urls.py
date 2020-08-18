@@ -11,5 +11,7 @@ urlpatterns = [
     path('form_data/', views.form_data),
     path('json_data/', views.json_data),
     path('header_data/', views.header_data),
-    path('redirect_url/', views.redirect_url)
+    path('redirect_url/', views.redirect_url),
+    # 类视图
+    path('regist/', views.RegistView.as_view()),
 ]

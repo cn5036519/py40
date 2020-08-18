@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
+from book.views_class import *
 from django.conf import global_settings
 
 # Create your views here.
