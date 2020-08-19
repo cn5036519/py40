@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 插值表达式 -->
+        {{ message }}
+        <hr>
+        <!-- 遍历手动创建的Object对象 -->
+        <ul>
+            <li v-for="(value, key) in person">{{ key }} - {{ value }}</li>
+        </ul>
+        <hr>
+        <!-- 遍历js列表 -->
+        <ul>
+            <li v-for="(item, index) in myList">{{ index }} - {{ item }}</li>
+        </ul>
+        <hr>
+        <!-- if语句的使用 -->
+        <p>你是男还是女？
+            <span v-if="person.gender">我是男</span>
+            <span v-else>我是女</span>
+        </p>
+        <p>你喜欢什么？
+            <span v-if="person.like == 'dancing'">{{ person.like }}</span>
+            <span v-else-if="person.like == 'reading'">{{ person.like }}</span>
+            <span v-else-if="person.like == 'cooking'">{{ person.like }}</span>
+            <span v-else>不喜欢</span>
+        </p>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var vue = new Vue({
+            el: "#app",
+            data: {
+                message: "你好 vue！",
+                person: {
+                    name: "jack",
+                    age: 34,
+                    gender: 0,
+                    address: "山西",
+                    like: "cooking"
+                },
+                myList: [10, 20, 30, 40]
+            }
+        })
+    </script>
+</body>
+</html>

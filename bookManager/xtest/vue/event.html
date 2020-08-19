@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue事件操作</title>
+</head>
+<body>
+    <div id="app">
+        <p>count = {{ count }}</p>
+        <!-- 可以写表达式 -->
+        <button v-on:click="count+=1">Add 1</button>
+        <!-- 也可以写函数名（也是表达式） -->
+        <button v-on:click="showAlter">出现一个弹窗</button>
+        <button v-on:click="showAlter()">出现第二个弹窗</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var vue = new Vue({
+            el: "#app",
+            data: {
+                count: 0
+            },
+            methods: {
+                showAlter: function(event) {
+                    alert("我是一个弹窗！")
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <table>
+            <tr>
+                <td>用户名：</td>
+                <td>
+                    <input type="text" name="uname" v-model="uname" id="">
+                </td>
+            </tr>
+            <tr>
+                <td>性别：</td>
+                <td>
+                    <input type="radio" name="gender" value="boy" v-model="gender" id="">男
+                    <input type="radio" name="gender" value="girl" v-model="gender" id="">女 
+                </td>
+            </tr>
+            <tr>
+                <td>爱好：</td>
+                <td>
+                    <input type="checkbox" name="like" value=1 v-model="like" id="">读书
+                    <input type="checkbox" name="like" value=2 v-model="like" id="">睡觉
+                    <input type="checkbox" name="like" value=3 v-model="like" id="">学习
+                </td>
+            </tr>
+            <tr>
+                <td>所在城市：</td>
+                <td>
+                    <select name="city" id="" v-model="city">
+                        <option value="sh">上海</option>
+                        <option value="bj">北京</option>
+                        <option value="gz">广州</option>
+                        <option value="sx">山西</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>个人描述：</td>
+                <td>
+                    <input type="text" name="description" v-model="description" id="">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button v-on:click="commit">提交</button>
+                </td>
+            </tr>
+        </table>
+        <p>{{ message }}</p>
+    </div>
+</body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                uname: '',
+                gender: '',
+                like: [],
+                city: '',
+                description: '',
+                message: ''
+            },
+            methods: {
+                commit: ()=> {
+                    // 这里的this指的是window对象
+                    alert(this.vm.uname)
+                    this.vm.message = this.vm.uname + this.vm.gender + this.vm.like + this.vm.city + this.vm.description;
+                },
+                commit2: function() {
+                    alert(typeof this.like)
+                    this.message = this.uname + "," + this.gender + "," + this.like + "," + this.city + "," + this.description;
+                }
+            }
+        })
+    </script>
+</html>
